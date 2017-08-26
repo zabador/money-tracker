@@ -1,6 +1,8 @@
 package net.zabador.money.activity
 
+import android.app.DialogFragment
 import android.os.Bundle
+import android.provider.Settings
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
@@ -10,6 +12,7 @@ import android.support.v7.widget.Toolbar
 import android.view.*
 import android.widget.TextView
 import net.zabador.money.R
+import net.zabador.money.fragment.NotificationEnableDialogFragment
 import net.zabador.money.fragment.OverviewFragment
 import net.zabador.money.fragment.TransactionFragment
 
@@ -44,6 +47,10 @@ class MainActivity : AppCompatActivity() {
         mViewPager = findViewById(R.id.container) as ViewPager
         mViewPager!!.adapter = mSectionsPagerAdapter
 
+        if (!isNotificationAccessEnabled()) {
+            alertUserToEnableNotificationAccess()
+        }
+
     }
 
 
@@ -65,6 +72,26 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun alertUserToEnableNotificationAccess() {
+
+        val ft = fragmentManager.beginTransaction()
+        val prev = fragmentManager.findFragmentByTag(DialogFragment::class.java.simpleName)
+        if (prev != null) {
+            ft.remove(prev)
+        }
+        ft.addToBackStack(null)
+
+        // Create and show the dialog.
+        val newFragment = NotificationEnableDialogFragment.newInstance()
+        newFragment.show(ft, DialogFragment::class.java.simpleName)
+    }
+
+    private fun isNotificationAccessEnabled(): Boolean {
+        val enabledListeners = Settings.Secure.getString(contentResolver,
+                "enabled_notification_listeners")
+        return enabledListeners != null && enabledListeners.contains(packageName)
     }
 
     /**

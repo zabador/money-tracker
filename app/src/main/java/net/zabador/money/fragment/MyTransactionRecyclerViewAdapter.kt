@@ -24,8 +24,9 @@ class MyTransactionRecyclerViewAdapter(private val mValues: List<Transaction>, p
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.mItem = mValues[position]
-        holder.mIdView.text = mValues[position].date
-        holder.mContentView.text = mValues[position].amount
+        holder.mDateView.text = mValues[position].date
+        holder.mPlaceView.text = mValues[position].place
+        holder.mAmountView.text = String.format("%s%s", "$", mValues[position].amount)
 
         holder.mView.setOnClickListener {
             mListener?.onListFragmentInteraction(holder.mItem as Transaction)
@@ -37,17 +38,19 @@ class MyTransactionRecyclerViewAdapter(private val mValues: List<Transaction>, p
     }
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val mIdView: TextView
-        val mContentView: TextView
+        val mDateView: TextView
+        val mPlaceView: TextView
+        val mAmountView: TextView
         var mItem: Transaction? = null
 
         init {
-            mIdView = mView.findViewById(R.id.id) as TextView
-            mContentView = mView.findViewById(R.id.content) as TextView
+            mDateView = mView.findViewById(R.id.date) as TextView
+            mPlaceView = mView.findViewById(R.id.place) as TextView
+            mAmountView = mView.findViewById(R.id.amount) as TextView
         }
 
         override fun toString(): String {
-            return super.toString() + " '" + mContentView.text + "'"
+            return super.toString() + " '" + mPlaceView.text + "'"
         }
     }
 }
