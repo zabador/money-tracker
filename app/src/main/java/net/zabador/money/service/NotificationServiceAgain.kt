@@ -10,6 +10,8 @@ import android.util.Log
  */
 
 class NotificationServiceAgain : NotificationListenerService() {
+    
+    val MONEY_REGEX = "\\d+\\.\\d{2}"
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         Log.d(TAG, "New Notification Posted")
@@ -21,7 +23,6 @@ class NotificationServiceAgain : NotificationListenerService() {
     }
 
     companion object {
-
         private val TAG = NotificationServiceAgain::class.java.simpleName
     }
 
