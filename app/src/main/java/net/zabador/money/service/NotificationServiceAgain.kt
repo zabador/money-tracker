@@ -19,7 +19,7 @@ class NotificationServiceAgain : NotificationListenerService() {
         val extras = sbn.notification.extras
 
         if (extras != null) {
-        }
+        }kjk
     }
 
     companion object {
