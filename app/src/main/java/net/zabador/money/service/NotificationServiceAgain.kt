@@ -20,7 +20,7 @@ class NotificationServiceAgain : NotificationListenerService() {
 
         if (extras != null) {
         }
-    }jjo
+    }
 
     companion object {
         private val TAG = NotificationServiceAgain::class.java.simpleName
